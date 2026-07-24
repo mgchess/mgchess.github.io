@@ -85,8 +85,9 @@ function renderBoardPreview() {
     for (let y = 0; y < 4; y++) {
         for (let x = 0; x < 4; x++) {
             const square = document.createElement("div");
-            square.style.width = "70px";
-            square.style.height = "70px";
+            square.style.width = "100%";
+            square.style.height = "100%";
+            square.style.aspectRatio = "1";
             square.style.display = "flex";
             square.style.alignItems = "center";
             square.style.justifyContent = "center";
