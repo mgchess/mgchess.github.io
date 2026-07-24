@@ -47,61 +47,75 @@ body{
 
 }
 
-#colorPicker{
+.colorPickerWrapper{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+}
 
-    width:100%;
-    height:55px;
+#colorPicker{
+    width:90px;
+    height:90px;
     border:none;
     background:none;
     cursor:pointer;
+    border-radius:50%;
+    overflow:hidden;
+    padding:0;
+}
 
+#colorPicker::-webkit-color-swatch-wrapper{
+    padding:0;
+}
+
+#colorPicker::-webkit-color-swatch{
+    border:none;
+    border-radius:50%;
 }
 
 #presetColors{
-
     display:grid;
     grid-template-columns:repeat(5,1fr);
     gap:10px;
-    margin-top:15px;
-
 }
 
 .color{
-
     aspect-ratio:1;
     border-radius:10px;
+    border:2px solid #30343f;
     cursor:pointer;
-    border:2px solid #333;
+    transition:.15s;
+}
 
+.color:hover{
+    transform:scale(1.08);
 }
 
 #borderList{
-
-    display:flex;
-    gap:15px;
-    overflow-x:auto;
-    padding-bottom:10px;
-
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+    gap:16px;
 }
 
 .borderItem{
-
-    min-width:100px;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:10px;
+    gap:8px;
     cursor:pointer;
-
 }
 
 .borderPreview{
-
     width:70px;
     aspect-ratio:1;
     border-radius:50%;
+    background:#555;
     position:relative;
+}
 
+.borderItem span{
+    font-size:13px;
+    text-align:center;
 }
 
 .todo{

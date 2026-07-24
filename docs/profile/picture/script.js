@@ -6,47 +6,57 @@ const profile = JSON.parse(
 );
 
 const presetColors = [
-    "#ffffff",
-    "#000000",
-    "#ff0000",
-    "#ff8800",
-    "#ffee00",
-    "#00bb44",
-    "#00bbff",
-    "#0044ff",
-    "#8844ff",
-    "#ff00ff"
+"#ffffff",
+"#dddddd",
+"#999999",
+"#555555",
+"#000000",
+
+"#ff0000",
+"#ff6600",
+"#ffaa00",
+"#ffee00",
+"#aaff00",
+
+"#00cc44",
+"#00ffaa",
+"#00ccff",
+"#0088ff",
+"#0044ff",
+
+"#6633ff",
+"#aa00ff",
+"#ff00ff",
+"#ff3399",
+"#8b4513"
 ];
 
 const borders = [
-    {
-        name: "Kein",
-        value: "none"
-    },
-    {
-        name: "Rot",
-        value: "basic;red"
-    },
-    {
-        name: "Blau",
-        value: "basic;dodgerblue"
-    },
-    {
-        name: "Gold",
-        value: "basic;gold"
-    },
-    {
-        name: "Regenbogen",
-        value: 'gradient;["top","red","orange","yellow","green","cyan","blue","violet"]'
-    },
-    {
-        name: "Pink",
-        value: 'gradient;["top","#ff00ff","#ff66cc"]'
-    },
-    {
-        name: "Blau Verlauf",
-        value: 'gradient;["left","#00bbff","#0044ff"]'
-    }
+
+{ name:"Kein", value:"none" },
+
+{ name:"Rot", value:"basic;red" },
+{ name:"Orange", value:"basic;orange" },
+{ name:"Gelb", value:"basic;gold" },
+{ name:"Grün", value:"basic;limegreen" },
+{ name:"Türkis", value:"basic;turquoise" },
+{ name:"Blau", value:"basic;dodgerblue" },
+{ name:"Lila", value:"basic;mediumorchid" },
+{ name:"Pink", value:"basic;hotpink" },
+{ name:"Weiß", value:"basic;white" },
+{ name:"Schwarz", value:"basic;black" },
+
+{ name:"Rot→Blau", value:'gradient;["left","red","blue"]' },
+{ name:"Blau→Türkis", value:'gradient;["left","dodgerblue","cyan"]' },
+{ name:"Pink", value:'gradient;["left","deeppink","violet"]' },
+{ name:"Gold", value:'gradient;["top","gold","orange"]' },
+{ name:"Feuer", value:'gradient;["top","red","orange","yellow"]' },
+{ name:"Natur", value:'gradient;["top","green","lime"]' },
+{ name:"Galaxy", value:'gradient;["left","#1a237e","#8e24aa","#ec407a"]' },
+{ name:"Rainbow", value:'gradient;["left","red","orange","yellow","green","cyan","blue","violet"]' },
+{ name:"Ice", value:'gradient;["top","white","cyan","#00bfff"]' },
+{ name:"Sunset", value:'gradient;["left","#ff9800","#ff4081","#7b1fa2"]' }
+
 ];
 
 const picker = document.getElementById("colorPicker");
