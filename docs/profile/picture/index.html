@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilbild</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
+</head>
+<body>
+
+<div id="topbar"></div>
+
+<div class="container">
+
+    <div class="card previewCard">
+        <h2>Vorschau</h2>
+
+        <div id="profilePreview"></div>
+    </div>
+
+    <div class="card">
+        <h2>Farbe</h2>
+
+        <input id="colorPicker" type="color">
+
+        <div id="presetColors"></div>
+    </div>
+
+    <div class="card">
+        <h2>Rahmen</h2>
+
+        <div id="borderList"></div>
+    </div>
+
+    <div class="card">
+        <h2>Bild</h2>
+
+        <div class="todo">
+            TODO
+        </div>
+    </div>
+
+    <div class="card">
+        <button id="saveButton">
+            TODO
+        </button>
+    </div>
+
+</div>
+
+<script type="module">
+    import { loadBar } from "../../api/bar.js";
+    document.getElementById("topbar").innerHTML = await loadBar("../..");
+</script>
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
