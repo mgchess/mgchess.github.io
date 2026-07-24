@@ -78,7 +78,8 @@ export function loadProfile(html, id, pre = "") {
 }
 
 // html
-function loadProfileI(div, pre) {
+export function loadProfileHTML(id, pre) {
+    const div = document.getElementById(id);
     //session-storage
     const profilePicData = JSON.parse(
         sessionStorage.getItem("profile-picture")
@@ -89,7 +90,7 @@ function loadProfileI(div, pre) {
         "txt-prof": "standard.png"
     };
     const image = "src/img/profilePics/" + images[profilePicData.picture];
-    div.style.backgroundImage = `url(${pre}${image})`;
+    div.style.backgroundImage = `url(${pre}/${image})`;
     div.style.backgroundSize = "cover";
     div.style.backgroundPosition = "center";
     div.style.backgroundRepeat = "no-repeat";
@@ -99,9 +100,7 @@ function loadProfileI(div, pre) {
     applyBorder(div, profilePicData.border);
 }
 
-function applyBorder(id, borderString) {
-    const div = document.getElementById(id);
-    if (!div) return;
+function applyBorder(div, borderString) {
     if (!borderString) return;
     const i = borderString.indexOf(";");
     const type = borderString.substring(0, i);
@@ -115,10 +114,14 @@ function applyBorder(id, borderString) {
     border.className = "profile-border";
     Object.assign(border.style, {
         position: "absolute",
-        inset: "-4%",
+        inset: "-3%",
         borderRadius: "50%",
-        zIndex: "-1",
-        pointerEvents: "none"
+        zIndex: "1",
+        pointerEvents: "none",
+        WebkitMask:
+            "radial-gradient(farthest-side, transparent calc(100% - 5px), black calc(100% - 5px))",
+        mask:
+            "radial-gradient(farthest-side, transparent calc(100% - 5px), black calc(100% - 5px))"
     });
     switch (type) {
         case "basic":

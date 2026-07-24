@@ -40,12 +40,17 @@
             <div class="card">
                 <h2>Profilbild</h2>
                 <a  href="./picture">
-                    <div id="picturePreview">
+                    <div 
+                        id="picturePreview"
+                        style="
+                            width: 100px;
+                            height: 100px;
+                            border-radius: 50%;
+                        "
+                    >
                         <!-- Profilbild -->
                     </div>
                 </a>
-                <!-- hinweis: -->
-                <h1>todo</h1>
             </div>
 
         </div>
@@ -54,6 +59,9 @@
 <script type="module">
     import { loadBar } from "../api/bar.js";
     document.getElementById("topbar").innerHTML = await loadBar("..");
+
+    import { loadProfileHTML } from "../src/assets/profile.js";
+    loadProfileHTML("picturePreview", "..");
 </script>
 <script>
 function renderBoardPreview() {
