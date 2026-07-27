@@ -254,12 +254,12 @@ function openSetOverlay(set){
                 <img src="../../src/img/sets/${set}/${color}/${figur}.png">
             `;
             item.onclick=()=>{
-                profile.picture={
+                profile.picture=JSON.stringify({
                     type:"set",
                     set:set,
                     color:color,
                     figur:figur
-                };
+                });
                 update();
                 overlay.remove();
             };

@@ -145,6 +145,19 @@ function imageKey(picId) {
     if (picId in images) {
         return "src/img/profilePics/" + images[picId];
     } else {
-        return "src/img/profilePics/" + picId + ".png";
+        if (picId[0] == "{") {
+            const picIDJ = JSON.parse(picId);
+            switch(picIDJ.type) {
+                case "set":
+                    return(
+                        "src/img/sets/" +
+                        picIDJ.set + "/" +
+                        picIDJ.color + "/" +
+                        picIDJ.figur + ".png"
+                    );
+            }
+        } else {
+            return "src/img/profilePics/" + picId + ".png";
+        }
     }
 }
