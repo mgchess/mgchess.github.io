@@ -179,7 +179,99 @@ async function loadPictures() {
     pictureList.appendChild(loadMore);
 }
 //bilder-laden-funktion
-
+async function loadMorePictures(){
+    const button = document.querySelector(".loadMoreItem");
+    if(button){
+        button.remove();
+    }
+    await loadSets();
+}
+async function loadSets(){
+    try{
+        const ipRes = await fetch("../../api/ip.txt");
+        const ip = (await ipRes.text()).trim();
+        const code = sessionStorage.getItem("session-id");
+        if(!code){
+            console.warn("Kein Code im SessionStorage");
+            return;
+        }
+        const res = await fetch(
+            `${ip}/skins/sets?code=${code}`
+        );
+        const data = await res.json();
+        renderSets(data.sets || []);
+    }catch(err){
+        console.error("Fehler beim Laden der Sets:",err);
+    }
+}
+function renderSets(sets){
+    const pictureList =
+        document.getElementById("pictureList");
+    sets.forEach(set=>{
+        const item=document.createElement("div");
+        item.className="setItem";
+        item.innerHTML=`
+            <div class="setPreview">
+                <img src="../../src/img/sets/${set}/icon.png">
+            </div>
+            <span>${set}</span>
+        `;
+        item.onclick=()=>{
+            openSetOverlay(set);
+        };
+        pictureList.appendChild(item);
+    });
+}
+function openSetOverlay(set){
+    const overlay=document.createElement("div");
+    overlay.id="setOverlay";
+    overlay.innerHTML=`
+        <div class="setWindow">
+            <h2>${set}</h2>
+            <div class="figureList"></div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+    const list =
+        overlay.querySelector(".figureList");
+    const colors=[
+        "white",
+        "black"
+    ];
+    const figuren=[
+        "b",
+        "k",
+        "d",
+        "t",
+        "l",
+        "s"
+    ];
+    colors.forEach(color=>{
+        figuren.forEach(figur=>{
+            const item=document.createElement("div");
+            item.className="figureItem";
+            item.innerHTML=`
+                <img src="../../src/img/sets/${set}/${color}/${figur}.png">
+            `;
+            item.onclick=()=>{
+                profile.picture={
+                    type:"set",
+                    set:set,
+                    color:color,
+                    figur:figur
+                };
+                update();
+                overlay.remove();
+            };
+            list.appendChild(item);
+        });
+    });
+    overlay.onclick=(e)=>{
+        if(e.target===overlay){
+            overlay.remove();
+        }
+    };
+}
 
 //runner
 update();
