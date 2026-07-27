@@ -1,3 +1,4 @@
+/* main */
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
@@ -31,6 +32,7 @@ body{
 
 }
 
+/* vorschau */
 .previewCard{
 
     display:flex;
@@ -47,6 +49,7 @@ body{
 
 }
 
+/* farben */
 .colorPickerWrapper{
     display:flex;
     justify-content:center;
@@ -94,6 +97,7 @@ body{
     transform:scale(1.1);
 }
 
+/* rahmen */
 #borderList{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
@@ -132,6 +136,7 @@ body{
 
 }
 
+/* speichern */
 button{
 
     width:100%;
@@ -184,4 +189,58 @@ button:hover{
 
 .pictureItem:hover .picturePreview{
     transform:scale(1.1);
+}
+
+/* bilder laden */
+.loadMoreItem{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+}
+
+.loadMorePreview{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#242933;
+    border:2px solid #30343f;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.15s;
+}
+
+.loadMoreItem:hover .loadMorePreview{
+    transform:scale(1.1);
+}
+
+.loader{
+    width:24px;
+    height:24px;
+
+    border:3px solid #555;
+    border-top-color:white;
+
+    border-radius:50%;
+
+    animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.loadMoreItem span{
+    font-size:13px;
+    text-align:center;
 }

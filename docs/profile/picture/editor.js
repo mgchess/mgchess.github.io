@@ -1,3 +1,4 @@
+// definitions
 import { loadProfileHTML } from "../../src/assets/profile.js";
 
 const profile = JSON.parse(
@@ -59,6 +60,7 @@ const borders = [
 
 ];
 
+// hintergrund & rand
 const picker = document.getElementById("colorPicker");
 const presets = document.getElementById("presetColors");
 const list = document.getElementById("borderList");
@@ -83,43 +85,29 @@ picker.oninput = () => {
 };
 
 presetColors.forEach(color => {
-
     const div = document.createElement("div");
-
     div.className = "color";
     div.style.background = color;
-
     div.onclick = () => {
         picker.value = color;
         profile.color = color;
         update();
     };
-
     presets.appendChild(div);
-
 });
 
 borders.forEach(border => {
-
     const item = document.createElement("div");
-
     item.className = "borderItem";
-
     item.innerHTML = `
         <div class="borderPreview"></div>
         <span>${border.name}</span>
     `;
-
     const preview = item.querySelector(".borderPreview");
-
     preview.style.background = "#555";
-
     if (border.value !== "none") {
-
         const borderDiv = document.createElement("div");
-
         borderDiv.className = "profile-border";
-
         Object.assign(borderDiv.style, {
             position: "absolute",
             inset: "-8%",
@@ -128,43 +116,32 @@ borders.forEach(border => {
             mask: "radial-gradient(farthest-side,transparent calc(100% - 4px),black calc(100% - 4px))",
             WebkitMask: "radial-gradient(farthest-side,transparent calc(100% - 4px),black calc(100% - 4px))"
         });
-
         if (border.value.startsWith("basic")) {
-
             borderDiv.style.background =
                 border.value.split(";")[1];
-
         } else {
-
             const txt =
                 border.value.substring(border.value.indexOf(";") + 1);
 
             const [dir, ...colors] = JSON.parse(txt);
-
             const dirs = {
                 top: "to top",
                 left: "to left",
                 topleft: "to top left",
                 topright: "to top right"
             };
-
             borderDiv.style.background =
                 `linear-gradient(${dirs[dir]}, ${colors.join(",")})`;
         }
-
         preview.appendChild(borderDiv);
     }
-
     item.onclick = () => {
         profile.border = border.value;
         update();
     };
-
     list.appendChild(item);
 
 });
-
-
 
 // bilder
 async function loadPictures() {
@@ -173,7 +150,6 @@ async function loadPictures() {
     const res = await fetch("../../src/img/profilePics/list.json");
     const pictures = await res.json();
     Object.entries(pictures).forEach(([filename, displayName]) => {
-        // .png entfernen
         const id = filename.replace(".png", "");
         const item = document.createElement("div");
         item.className = "pictureItem";
@@ -189,7 +165,22 @@ async function loadPictures() {
         };
         pictureList.appendChild(item);
     });
+    const loadMore = document.createElement("div");
+    loadMore.className = "loadMoreItem";
+    loadMore.innerHTML = `
+        <div class="loadMorePreview">
+            <div class="loader"></div>
+        </div>
+        <span>Mehr laden</span>
+    `;
+    loadMore.onclick = () => {
+        loadMorePictures();
+    };
+    pictureList.appendChild(loadMore);
 }
+//bilder-laden-funktion
 
+
+//runner
 update();
 loadPictures();
