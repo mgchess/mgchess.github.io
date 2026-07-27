@@ -13,8 +13,7 @@ body{
 .content{
     display:grid;
     gap:16px;
-    align-items:start;
-    grid-auto-flow: column;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .card{
@@ -35,13 +34,10 @@ body{
 
 #boardPreview{
     display:grid;
-    grid-template-columns:repeat(4,70px);
-    grid-template-rows:repeat(4,70px);
-    width:280px;
-    height:280px;
-    border:1px solid #343b49;
-    border-radius:10px;
-    overflow:hidden;
+    grid-template-columns:repeat(4,1fr);
+    width:100%;
+    max-width:280px;
+    aspect-ratio:1;
 }
 
 #setIcon{
@@ -60,9 +56,6 @@ body{
 }
 
 @media (max-width:900px){
-    .content{
-        grid-template-columns:1fr;
-    }
     #boardPreview,
     #setIcon{
         width:100%;
@@ -71,4 +64,8 @@ body{
         aspect-ratio:1;
     }
 
+}
+
+a {
+    color: white;
 }
