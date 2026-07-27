@@ -13,12 +13,7 @@ export function loadProfile(html, id, pre = "") {
         sessionStorage.getItem("profile-picture") ||
         '{"picture":"txt-prof","color":"#ff00ea","border":"none"}'
     );
-    const images = {
-        "txt-prof": "standard.png"
-    };
-    const image =
-        "src/img/profilePics/" +
-        (images[profilePicData.picture] || "standard.png");
+    const image = imageKey(profilePicData.picture);
     const style = `
         position:relative;
         overflow:visible;
@@ -86,10 +81,7 @@ export function loadProfileHTML(id, pre) {
         || '{"picture":"txt-prof","color":"#ff00ea","border":"none"}'
     );
     //Bild
-    const images = {
-        "txt-prof": "standard.png"
-    };
-    const image = "src/img/profilePics/" + images[profilePicData.picture];
+    const image = imageKey(profilePicData.picture);
     div.style.backgroundImage = `url(${pre}/${image})`;
     div.style.backgroundSize = "cover";
     div.style.backgroundPosition = "center";
@@ -144,3 +136,15 @@ function applyBorder(div, borderString) {
     }
     div.appendChild(border);
 };
+
+//helper
+function imageKey(picId) {
+    const images = {
+        "txt-prof": "standard.png"
+    };
+    if (picId in images) {
+        return "src/img/profilePics/" + images[picId];
+    } else {
+        return "src/img/profilePics/" + picId + ".png";
+    }
+}

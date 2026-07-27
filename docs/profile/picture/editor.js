@@ -164,4 +164,32 @@ borders.forEach(border => {
 
 });
 
+
+
+// bilder
+async function loadPictures() {
+    const pictureList = document.getElementById("pictureList");
+    if (!pictureList) return;
+    const res = await fetch("../../src/img/profilePics/list.json");
+    const pictures = await res.json();
+    Object.entries(pictures).forEach(([filename, displayName]) => {
+        // .png entfernen
+        const id = filename.replace(".png", "");
+        const item = document.createElement("div");
+        item.className = "pictureItem";
+        item.innerHTML = `
+            <div class="picturePreview">
+                <img src="../../src/img/profilePics/${filename}">
+            </div>
+            <span>${displayName}</span>
+        `;
+        item.onclick = () => {
+            profile.picture = id;
+            update();
+        };
+        pictureList.appendChild(item);
+    });
+}
+
 update();
+loadPictures();
