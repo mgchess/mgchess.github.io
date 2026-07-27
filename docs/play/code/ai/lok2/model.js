@@ -151,15 +151,52 @@ function applyMove(board, move) {
 }
 
 // ==========================
-// LEARNING MOVE PICKER
+// BIG AI UPDATE:
 // ==========================
+
 function moveKey(m) {
  return JSON.stringify(m);
 }
-
-function chooseMove(moves) {
+function chooseMove(board, moves) {
     if (!moves.length) return null;
-    return moves[Math.floor(Math.random() * moves.length)];
+    for (const move of moves) {
+        const [tx, ty] = move.to;
+        const target = board[ty][tx];
+
+        if (target && target.toLowerCase() === "k") {
+            return move;
+        }
+    }
+    let bestCapture = null;
+    let bestValue = -1;
+
+    for (const move of moves) {
+        const [tx, ty] = move.to;
+        const target = board[ty][tx];
+
+        if (target) {
+            const value = pieceValue[target.toLowerCase()];
+            if (value > bestValue) {
+                bestValue = value;
+                bestCapture = move;
+            }
+        }
+    }
+
+    if (bestCapture) return bestCapture;
+    let bestMove = null;
+    let bestScore = -Infinity;
+    for (const move of moves) {
+        const score = moveScores.get(moveKey(move)) || 0;
+        if (score > bestScore) {
+            bestScore = score;
+            bestMove = move;
+        }
+    }
+    if (!bestMove || bestScore === 0) {
+        return moves[Math.floor(Math.random() * moves.length)];
+    }
+    return bestMove;
 }
 
 // ==========================
@@ -167,18 +204,16 @@ function chooseMove(moves) {
 // ==========================
 function playGame(startBoard, InTurn) {
 const board = cloneBoard(startBoard);
-
  let turn = InTurn;
  const history = [];
  const maxMoves = 200;
-
  for (let i=0;i<maxMoves;i++) {
    const moves = getAllMoves(board, turn);
    if (moves.length === 0) {
      return {winner: turn === "white" ? "black" : "white", length: i, history};
    }
 
-   const move = chooseMove(moves);
+   const move = chooseMove(board, moves);
    history.push({turn, move});
 
    const result = applyMove(board, move);
