@@ -2,7 +2,7 @@ const saveButton = document.getElementById("saveButton");
 saveButton.onclick = saveProfilePicture;
 async function saveProfilePicture() {
     const code = sessionStorage.getItem("session-id");
-    const pic = sessionStorage.getItem("profile-picture");
+    const pic = JSON.parse(sessionStorage.getItem("profile-picture"));
     if (!code || !pic) {
         console.log("Fehlende Sitzungsdaten.");
         return;
