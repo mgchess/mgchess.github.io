@@ -1,1 +1,30 @@
-analysis done using <a href="https://github.com/nmrugg/stockfish.js">stockfish</a>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    analysis done using <a href="https://github.com/nmrugg/stockfish.js">stockfish</a>
+
+<script src="./stockfish-user.js"></script>
+
+<script type="module">
+    const boardMatrix = [
+        ["t","s","l","d","k","l","s","t"],
+        ["b","b","b","b","b","b","b","b"],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["B","B","B","B","B","B","B","B"],
+        ["T","S","L","D","K","L","S","T"]
+    ];
+    const moves = await analyseMoves(boardMatrix);
+    console.log(moves);
+</script>
+
+</body>
+</html>
+
