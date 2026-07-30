@@ -203,6 +203,7 @@ function startClock(){
 }
 
 function updateGameStatus(text){
+    sessionStorage.setItem("moveList", moveList);
     let status = document.getElementById("gameStatus");
     if(!status){
         status = document.createElement("div");
