@@ -34,6 +34,7 @@ let winner = null;
 let lastMove = null;
 let promotionPending = false;
 const moveHistory = [];
+const moveList = [];
 
 // 🖼️ Render
 function drawBoard(){
@@ -101,6 +102,11 @@ function handleClick(x, y){
 
             boardMatrix[y][x] = boardMatrix[from.y][from.x];
             boardMatrix[from.y][from.x] = "";
+
+            moveList.push(
+                squareName(from.x, from.y) + squareName(x, y)
+             );
+            console.log(moveList);
 
         }
 
