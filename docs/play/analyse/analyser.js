@@ -29,37 +29,44 @@ console.log(leveledMoves);
 async function analyseMoveList(moveList, color = "white") {
     const allResults = [];
     let board = structuredClone(boardMatrix);
-    if (color === "white") {
-        const startResult = await analyseMoves(board);
-        console.log(
-            "Beste Züge für Weiß (Startstellung):"
-        );
-        console.log(startResult);
-        allResults.push({
-            afterMove: moveList[0],
-            moves: startResult
-        });
-    }
-    for (let i = 0; i < moveList.length; i++) {
-        board = applyMove(board, moveList[i]);
-        const nextIsWhite = (i + 1) % 2 === 0;
-        if (
-            (color === "white" && !nextIsWhite) ||
-            (color === "black" && nextIsWhite)
-        ) {
-            continue;
-        }
+    // Startposition abhängig von der farbe
+    let startIndex = color === "white" ? 0 : 1;
+    for (let i = startIndex; i < moveList.length; i += 2) {
+        const playedMove = moveList[i];
+        if (!playedMove) break;
         const result = await analyseMoves(board);
-        console.log(
-            `Beste Züge für ${color} nach ${moveList[i]}:`
-        );
-        console.log(result);
         allResults.push({
-            afterMove: moveList[i + 1],
+            afterMove: playedMove,
             moves: result
         });
+        console.log(
+            "Analysiert:",
+            playedMove
+        );
+        // eigenen Zug ausführen
+        board = applyMove(
+            board,
+            playedMove
+        );
+        addMoveToList(
+            playedMove,
+            i
+        );
+        // gegnerischen Zug ausführen
+        const opponentMove = moveList[i + 1];
+        if (opponentMove) {
+            board = applyMove(
+                board,
+                opponentMove
+            );
+            addMoveToList(
+                opponentMove,
+                i + 1
+            );
+        }
+        updateBoard(board);
     }
-    return allResults;
+   return allResults;
 }
 
 function applyMove(board, move) {
@@ -71,6 +78,23 @@ function applyMove(board, move) {
     newBoard[toY][toX] = newBoard[fromY][fromX];
     newBoard[fromY][fromX] = "";
     return newBoard;
+}
+
+function updateBoard(newBoard){
+    drawBoard(newBoard);
+}
+
+function addMoveToList(move, index){
+    const box = document.getElementById("moves");
+    const div = document.createElement("div");
+    div.className="move";
+    const number =  Math.floor(index / 2) + 1;
+    if(index % 2 === 0){
+        div.textContent = `${number}. ${move}`;
+    } else {
+        div.textContent = `${number}... ${move}`;
+    }
+    box.appendChild(div);
 }
 
 //rater
@@ -116,103 +140,53 @@ function levelMoves(analysis) {
 
 //brett erstellen
 function initColors(){
-
     let matrix=[];
-
     for(let y=0;y<8;y++){
-
         matrix[y]=[];
-
         for(let x=0;x<8;x++){
-
             matrix[y][x] =
                 (x+y)%2===0 ? "L" : "l";
         }
     }
-
     return matrix;
 }
-
-
 const colorMatrix = initColors();
-
-
-function drawBoard(){
-
+function drawBoard(currentBoard = boardMatrix){
     const board =
         document.getElementById("board");
-
-
     board.innerHTML="";
-
-
     for(let y=0;y<8;y++){
-
         for(let x=0;x<8;x++){
-
-
             const square =
                 document.createElement("div");
-
-
             square.className="square";
-
-
-            // gleiche Farben wie dein Spiel
             square.style.background =
                 style.board[colorMatrix[y][x]];
-
-
-
             const piece =
-                boardMatrix[y][x];
-
-
+                currentBoard[y][x];
             if(piece){
-
                 const img =
                     document.createElement("img");
-
-
                 img.src =
                     style.pieces[piece];
-
-
                 square.appendChild(img);
             }
-
-
-
-            // Zahlen links
             if(x===0){
-
                 const rank =
                     document.createElement("span");
-
                 rank.className="rankLabel";
                 rank.textContent =
                     8-y;
-
                 square.appendChild(rank);
             }
-
-
-
-            // Buchstaben unten
             if(y===7){
-
                 const file =
                     document.createElement("span");
-
                 file.className="fileLabel";
-
                 file.textContent =
                     "ABCDEFGH"[x];
-
                 square.appendChild(file);
             }
-
-
             board.appendChild(square);
         }
     }
