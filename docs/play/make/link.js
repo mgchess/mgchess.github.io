@@ -90,6 +90,6 @@ createRoom().then(result => {
 	if (result.ok) {
 		console.log("Dein Raumcode:", result.code);
 		document.getElementById("inviteLink").value = 
-			`https://aiincer.github.io/chess/play/make/join/?method=link&code=${result.code}`;
+			`https://mgchess.github.io/play/make/join/?method=link&code=${result.code}`;
 	}
 });

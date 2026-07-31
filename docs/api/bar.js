@@ -66,7 +66,7 @@ export async function loadBar(level) {
     ? `
     <div class="navbar">
       <a class="logo" href="${level}/home">
-        <img src="https://aiincer.github.io/chess/src/img/logo.png" alt="Logo" />
+        <img src="https://mgchess.github.io/src/img/logo.png" alt="Logo" />
         Chess
       </a>
 
@@ -84,7 +84,7 @@ export async function loadBar(level) {
     : `
     <div class="navbar">
       <a class="logo" href="${level}/">
-        <img src="https://aiincer.github.io/chess/src/img/logo.png" alt="Logo" />
+        <img src="https://mgchess.github.io/src/img/logo.png" alt="Logo" />
         Chess
       </a>
 
