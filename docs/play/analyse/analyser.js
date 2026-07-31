@@ -1,4 +1,3 @@
-// test-definitions
 const boardMatrix = [
     ["t","s","l","d","k","l","s","t"],
     ["b","b","b","b","b","b","b","b"],
@@ -10,6 +9,8 @@ const boardMatrix = [
     ["T","S","L","D","K","L","S","T"]
 ];
 
+// test-definitions
+/*
 const moveList = [
     "e2e4",
     "e7e5",
@@ -17,6 +18,12 @@ const moveList = [
     "b8c6",
     "f1c4"
 ];
+console.log("Alle Analysen:");
+console.log(moves);
+const leveledMoves = levelMoves(moves);
+console.log("gelevelte Analyse:");
+console.log(leveledMoves);
+*/
 
 //list-analyzer
 async function analyseMoveList(moveList, color = "white") {
@@ -67,7 +74,7 @@ function applyMove(board, move) {
 }
 
 //rater
-function levelMoves(moveList, analysis) {
+function levelMoves(analysis) {
     const levels = [];
     for (const item of analysis) {
         const playedMove = item.afterMove;
@@ -107,13 +114,16 @@ function levelMoves(moveList, analysis) {
     return levels;
 }
 
-//test
+//analysieren
 const moves = await analyseMoveList(
-    moveList,
-    "white"
+    JSON.parse(sessionStorage.getItem("moveList")),
+    (JSON.parse(sessionStorage.getItem("gameDetails")).color  === 0
+        ? "white"
+        : "black"
+    )
 );
 console.log("Alle Analysen:");
 console.log(moves);
-const leveledMoves = levelMoves(moveList, moves);
+const leveledMoves = levelMoves(moves);
 console.log("gelevelte Analyse:");
 console.log(leveledMoves);
