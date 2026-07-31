@@ -203,7 +203,10 @@ function startClock(){
 }
 
 function updateGameStatus(text){
-    sessionStorage.setItem("moveList", moveList);
+    sessionStorage.setItem(
+        "moveList", 
+        JSON.stringify(moveList)
+    );
     let status = document.getElementById("gameStatus");
     if(!status){
         status = document.createElement("div");
@@ -211,6 +214,15 @@ function updateGameStatus(text){
         document.getElementById("panel").prepend(status);
     }
     status.textContent = text;
+    if(!document.getElementById("analyseButton")){
+        const button = document.createElement("button");
+        button.id = "analyseButton";
+        button.textContent = "Analysieren";
+        button.onclick = () => {
+            window.location.href = "./analyse";
+        };
+        document.getElementById("panel").appendChild(button);
+    }
 }
 
 // 🚀 START
