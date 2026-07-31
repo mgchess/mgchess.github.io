@@ -114,6 +114,111 @@ function levelMoves(analysis) {
     return levels;
 }
 
+//brett erstellen
+function initColors(){
+
+    let matrix=[];
+
+    for(let y=0;y<8;y++){
+
+        matrix[y]=[];
+
+        for(let x=0;x<8;x++){
+
+            matrix[y][x] =
+                (x+y)%2===0 ? "L" : "l";
+        }
+    }
+
+    return matrix;
+}
+
+
+const colorMatrix = initColors();
+
+
+function drawBoard(){
+
+    const board =
+        document.getElementById("board");
+
+
+    board.innerHTML="";
+
+
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+
+            const square =
+                document.createElement("div");
+
+
+            square.className="square";
+
+
+            // gleiche Farben wie dein Spiel
+            square.style.background =
+                style.board[colorMatrix[y][x]];
+
+
+
+            const piece =
+                boardMatrix[y][x];
+
+
+            if(piece){
+
+                const img =
+                    document.createElement("img");
+
+
+                img.src =
+                    style.pieces[piece];
+
+
+                square.appendChild(img);
+            }
+
+
+
+            // Zahlen links
+            if(x===0){
+
+                const rank =
+                    document.createElement("span");
+
+                rank.className="rankLabel";
+                rank.textContent =
+                    8-y;
+
+                square.appendChild(rank);
+            }
+
+
+
+            // Buchstaben unten
+            if(y===7){
+
+                const file =
+                    document.createElement("span");
+
+                file.className="fileLabel";
+
+                file.textContent =
+                    "ABCDEFGH"[x];
+
+                square.appendChild(file);
+            }
+
+
+            board.appendChild(square);
+        }
+    }
+}
+drawBoard()
+
 //analysieren
 const moves = await analyseMoveList(
     JSON.parse(sessionStorage.getItem("moveList")),

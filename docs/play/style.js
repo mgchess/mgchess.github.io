@@ -39,19 +39,19 @@ const style = {
     },
     pieces: {
         // ♟️ Schwarz
-        b: `../src/img/sets/${blackSet}/black/b.png`,
-        t: `../src/img/sets/${blackSet}/black/t.png`,
-        s: `../src/img/sets/${blackSet}/black/s.png`,
-        l: `../src/img/sets/${blackSet}/black/l.png`,
-        d: `../src/img/sets/${blackSet}/black/d.png`,
-        k: `../src/img/sets/${blackSet}/black/k.png`,
+        b: `${pre}src/img/sets/${blackSet}/black/b.png`,
+        t: `${pre}src/img/sets/${blackSet}/black/t.png`,
+        s: `${pre}src/img/sets/${blackSet}/black/s.png`,
+        l: `${pre}src/img/sets/${blackSet}/black/l.png`,
+        d: `${pre}src/img/sets/${blackSet}/black/d.png`,
+        k: `${pre}src/img/sets/${blackSet}/black/k.png`,
         // ♟️ Weiß
-        B: `../src/img/sets/${whiteSet}/white/b.png`,
-        T: `../src/img/sets/${whiteSet}/white/t.png`,
-        S: `../src/img/sets/${whiteSet}/white/s.png`,
-        L: `../src/img/sets/${whiteSet}/white/l.png`,
-        D: `../src/img/sets/${whiteSet}/white/d.png`,
-        K: `../src/img/sets/${whiteSet}/white/k.png`
+        B: `${pre}src/img/sets/${whiteSet}/white/b.png`,
+        T: `${pre}src/img/sets/${whiteSet}/white/t.png`,
+        S: `${pre}src/img/sets/${whiteSet}/white/s.png`,
+        L: `${pre}src/img/sets/${whiteSet}/white/l.png`,
+        D: `${pre}src/img/sets/${whiteSet}/white/d.png`,
+        K: `${pre}src/img/sets/${whiteSet}/white/k.png`
     }
 };
 //render-settings
