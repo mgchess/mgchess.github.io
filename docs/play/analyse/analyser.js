@@ -141,6 +141,9 @@ function addMovesToList(moves, index, level, color){
     divs[0].innerHTML = `${index + 1}. ${moves[0]}`;
     divs[1].innerHTML = moves[1];
     divs[2].innerHTML = `${level.html} <span>${level.txt}</span>`;
+    divs[color === "white" ? 0 : 1].innerHTML =
+        `<b>${divs[color === "white" ? 0 : 1].innerHTML}</b>`;
+    divs[color === "white" ? 0 : 1].style.color = "orange";
     box.appendChild(moveDiv);
 }
 
