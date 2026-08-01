@@ -9,8 +9,6 @@
 </head>
 <body>
 
-analysis done using <a href="https://github.com/nmrugg/stockfish.js">stockfish</a>
-
 <div id="game">
 
     <div id="boardContainer">
@@ -22,21 +20,14 @@ analysis done using <a href="https://github.com/nmrugg/stockfish.js">stockfish</
     <div id="sidebar">
 
     <div id="panel">
-
-        <div id="topInfo"></div>
-
+        <p>
+            Chess analysis powered in part by
+            <a href="https://github.com/nmrugg/stockfish.js">
+                Stockfish.js</a>, 
+            an open-source project based on Stockfish.
+        </p>
         <div id="moves"></div>
-        
-        <div id="arrowControls" style="display:none">
-            <input type="color" id="arrowColor" value="#ff0000">
-            <button id="arrowButton">
-                Pfeile
-            </button>
-        </div>
     </div>
-
-</div> 
-</div>
 
 <script>
     const pre = "../../";
