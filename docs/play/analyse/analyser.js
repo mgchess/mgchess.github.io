@@ -8,6 +8,16 @@ const boardMatrix = [
     ["B","B","B","B","B","B","B","B"],
     ["T","S","L","D","K","L","S","T"]
 ];
+let levelBoard = [
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []],
+  [[], [], [], [], [], [], [], []]
+];
 
 // test-definitions
 /*
@@ -106,35 +116,41 @@ function addMovesToList(moves, index, level){
 function levelMove(item) {
     //const levels = [];
     //for (const item of analysis) {
+    let index;
+    let toLevel = 99;
+    if (JSON.stringify(item).trim()[0] ==="{") {
         const playedMove = item.afterMove;
         const bestMoves = item.moves;
-        const index = bestMoves.findIndex(
+        index = bestMoves.findIndex(
             m => m.move === playedMove
         );
+    } else {
+        toLevel = item;
+    }
         let level;
         let txt;
         let html;
-        if (index === 0) {
+        if (index === 0 || toLevel === 1 ) {
             level = 1;
             txt = "perfect";
             html = "<div class='level level1'>100</div>";
-        } else if (index >= 1 && index <= 2) {
+        } else if ((index >= 1 && index <= 2) || toLevel === 2 ) {
             level = 2;
             txt = "genius";
             html = "<div class='level level2'>!!</div>";
-        } else if (index >= 3 && index <= 9) {
+        } else if ((index >= 3 && index <= 9) || toLevel === 3 ) {
             level = 3;
             txt = "very smart";
             html = "<div class='level level3'>!</div>";
-        } else if (index >= 10 && index <= 19) {
+        } else if ((index >= 10 && index <= 19) || toLevel === 4 ) {
             level = 4;
             txt = "smart";
             html = "<div class='level level4'>+</div>";
-        } else if (index >= 20 && index <= 34) {
+        } else if ((index >= 20 && index <= 34) || toLevel === 5 ) {
             level = 5;
             txt = "neutral";
             html = "<div class='level level5'>ok</div>";
-        } else if (index >= 35 && index <= 49) {
+        } else if ((index >= 35 && index <= 49) || toLevel === 6 ) {
             level = 6;
             txt = "bad";
             html = "<div class='level level6'>-</div>";
@@ -189,14 +205,30 @@ function drawBoard(currentBoard = boardMatrix){
             square.className="square";
             square.style.background =
                 style.board[colorMatrix[y][x]];
-            const piece =
-                currentBoard[y][x];
+            const piece = currentBoard[y][x];
+            const levels = levelBoard[y][x];
             if(piece){
-                const img =
-                    document.createElement("img");
-                img.src =
-                    style.pieces[piece];
-                square.appendChild(img);
+                const img = document.createElement("img");
+                img.src = style.pieces[piece];
+                const fig = document.createElement("div");
+                fig.className = "pieceContainer";
+                const figImg =  document.createElement("div");
+                figImg.className = "pieceImage";
+                figImg.appendChild(img);
+                const levs = document.createElement("div");
+                levs.className = "pieceLevels";
+                for (
+                    let i = 0;
+                    i < levels.length;
+                    i++
+                ) {
+                    let lev = document.createElement("div");
+                    lev.innerHTML = levelMove(levels[i]).html;
+                    levs.appendChild(lev);
+                }
+                fig.appendChild(figImg);
+                fig.appendChild(levs);
+                square.appendChild(fig);
             }
             if(x===0){
                 const rank =
