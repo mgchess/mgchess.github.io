@@ -41,17 +41,26 @@ async function analyseMoveList(moveListi, color) {
     let board = structuredClone(boardMatrix);
     // Startposition abhängig von der farbe
     let startIndex = color === "white" ? 0 : 1;
+    startIndex = bothSides ? 0 : startIndex;
     let moveList = moveListi;
-    if (color === "black") {
+    if (color === "black" && !bothSides) {
         board = applyMove(
             board,
             moveList[0]
         );
     }
-    for (let i = startIndex; i < moveList.length; i += 2) {
+    for (
+            let i = startIndex;
+            i < moveList.length;
+            i += bothSides ? 2 : 2
+        ) {
         const playedMove = moveList[i];
+        const playedMove2 = moveList[i + 1];
         if (!playedMove) break;
-        const result = await analyseMoves(board, color);
+        const result = await analyseMoves(
+            board,
+            bothSides ? "w" : color
+        );
         allResults.push({
             afterMove: playedMove,
             moves: result
@@ -69,40 +78,84 @@ async function analyseMoveList(moveListi, color) {
                 moves: result
             }).level
         );
-        // gegnerischen Zug ausführen
-        const opponentMove = moveList[i + 1];
-        if (opponentMove) {
+        let result2;
+        if (bothSides) { if (playedMove2) {
+            updateBoard(board);
+            //analyse 2
+            result2 = await analyseMoves(
+                board,
+                "b"
+            );
+            allResults.push({
+                afterMove: playedMove2,
+                moves: result2
+            });
+            console.log(
+                "Analysiert:",
+                playedMove2
+            );
             board = applyMove(
                 board,
-                opponentMove
-            );
-        }
-        if (color === "white") {
-            addMovesToList(
-                [
-                    playedMove,
-                    opponentMove || ""
-                ],
-                (i / 2),
+                playedMove2,
                 levelMove({
-                    afterMove: playedMove,
-                    moves: result
-                }),
-                color
+                    afterMove: playedMove2,
+                    moves: result2
+                }).level
             );
-        } else {
             addMovesToList(
-                [
-                    moveList[i - 1],
-                    moveList[i] || ""
-                ],
-                ((i - 1) / 2),
-                levelMove({
-                    afterMove: playedMove,
-                    moves: result
-                }),
-                color
-            );
+                    [
+                        playedMove,
+                        playedMove2 || ""
+                    ],
+                    (i / 2),
+                    [
+                        levelMove({
+                            afterMove: playedMove,
+                            moves: result
+                        }),
+                        levelMove({
+                            afterMove: playedMove2,
+                            moves: result2
+                        })
+                    ],
+                    "both"
+                );
+        }} else {
+            // gegnerischen Zug ausführen
+            const opponentMove = moveList[i + 1];
+            if (opponentMove) {
+                board = applyMove(
+                    board,
+                    opponentMove
+               );
+            }
+            if (color === "white") {
+                addMovesToList(
+                    [
+                        playedMove,
+                        opponentMove || ""
+                    ],
+                    (i / 2),
+                    levelMove({
+                        afterMove: playedMove,
+                        moves: result
+                    }),
+                    color
+                );
+            } else {
+                addMovesToList(
+                    [
+                        moveList[i - 1],
+                        moveList[i] || ""
+                    ],
+                    ((i - 1) / 2),
+                    levelMove({
+                        afterMove: playedMove,
+                        moves: result
+                    }),
+                    color
+                );
+            }
         }
         updateBoard(board);
     }
@@ -130,21 +183,37 @@ function updateBoard(newBoard){
 }
 
 function addMovesToList(moves, index, level, color){
-    const box = document.getElementById("moves");
-    const moveDiv = document.createElement("div");
-    moveDiv.className="move";
-    let divs = [];
-    for ( let i=0 ; i<3 ; i++ ) {
-        divs[i] = document.createElement("div");
-        moveDiv.appendChild(divs[i]);
+    if (color === "both" ) {
+        const box = document.getElementById("moves");
+        const moveDiv = document.createElement("div");
+        moveDiv.className="move moveB";
+        let divs = [];
+        for ( let i=0 ; i<4 ; i++ ) {
+            divs[i] = document.createElement("div");
+            moveDiv.appendChild(divs[i]);
+        }
+        divs[0].innerHTML = `${index + 1}. ${moves[0]}`;
+        divs[1].innerHTML = `${level[0].html} <span>${level[0].txt}</span>`;
+        divs[2].innerHTML = moves[1];
+        divs[3].innerHTML = `${level[1].html} <span>${level[1].txt}</span>`;
+        box.appendChild(moveDiv);
+    } else {
+        const box = document.getElementById("moves");
+        const moveDiv = document.createElement("div");
+        moveDiv.className="move";
+        let divs = [];
+        for ( let i=0 ; i<3 ; i++ ) {
+            divs[i] = document.createElement("div");
+            moveDiv.appendChild(divs[i]);
+        }
+        divs[0].innerHTML = `${index + 1}. ${moves[0]}`;
+        divs[1].innerHTML = moves[1];
+        divs[2].innerHTML = `${level.html} <span>${level.txt}</span>`;
+        divs[color === "white" ? 0 : 1].innerHTML =
+            `<b>${divs[color === "white" ? 0 : 1].innerHTML}</b>`;
+        divs[color === "white" ? 0 : 1].style.color = "orange";
+        box.appendChild(moveDiv);
     }
-    divs[0].innerHTML = `${index + 1}. ${moves[0]}`;
-    divs[1].innerHTML = moves[1];
-    divs[2].innerHTML = `${level.html} <span>${level.txt}</span>`;
-    divs[color === "white" ? 0 : 1].innerHTML =
-        `<b>${divs[color === "white" ? 0 : 1].innerHTML}</b>`;
-    divs[color === "white" ? 0 : 1].style.color = "orange";
-    box.appendChild(moveDiv);
 }
 
 //rater

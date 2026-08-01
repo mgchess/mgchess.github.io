@@ -74,7 +74,8 @@
     flex:1;
 }
 
-.move > div:last-child {
+.move > div:last-child,
+.moveB > div:nth-child(2){
     display:flex;
     align-items:center;
     gap:8px;
@@ -119,4 +120,29 @@ p {
 
 a {
     color: gray;
+}
+
+/* button */
+/* button-analyse */
+#analyseTButton{
+    display: block;
+    margin: 16px auto 0;
+    padding: 12px 24px;
+    background: #f9e82d;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+#analyseTButton:hover{
+    background: #cbbd24;
+    transform: translateY(-2px);
+}
+
+#analyseTButton:active{
+    transform: translateY(0);
 }

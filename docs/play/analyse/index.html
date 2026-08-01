@@ -26,7 +26,22 @@
                 Stockfish.js</a>, 
             an open-source project based on Stockfish.
         </p>
+
         <div id="moves"></div>
+
+        <a href="./?both=true" id="analyseTButtonA">
+            <button id="analyseTButton">
+                beide Seiten analysieren
+            </button>
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const bothSidesM = params.get("both");
+                const bothSides = bothSidesM === "true" ? true : false;
+                if (bothSidesM === "true") {
+                    document.getElementById("analyseTButtonA").innerHTML = "";
+                }
+            </script>
+        </a>
     </div>
 
 <script>
