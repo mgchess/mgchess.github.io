@@ -36,15 +36,22 @@ console.log(leveledMoves);
 */
 
 //list-analyzer
-async function analyseMoveList(moveList, color = "white") {
+async function analyseMoveList(moveListi, color) {
     const allResults = [];
     let board = structuredClone(boardMatrix);
     // Startposition abhängig von der farbe
     let startIndex = color === "white" ? 0 : 1;
+    let moveList = moveListi;
+    if (color === "black") {
+        board = applyMove(
+            board,
+            moveList[0]
+        );
+    }
     for (let i = startIndex; i < moveList.length; i += 2) {
         const playedMove = moveList[i];
         if (!playedMove) break;
-        const result = await analyseMoves(board);
+        const result = await analyseMoves(board, color);
         allResults.push({
             afterMove: playedMove,
             moves: result
@@ -70,17 +77,33 @@ async function analyseMoveList(moveList, color = "white") {
                 opponentMove
             );
         }
-        addMovesToList(
-            [
-                playedMove,
-                opponentMove || ""
-            ],
-            (i / 2),
-            levelMove({
-                afterMove: playedMove,
-                moves: result
-            })
-        );
+        if (color === "white") {
+            addMovesToList(
+                [
+                    playedMove,
+                    opponentMove || ""
+                ],
+                (i / 2),
+                levelMove({
+                    afterMove: playedMove,
+                    moves: result
+                }),
+                color
+            );
+        } else {
+            addMovesToList(
+                [
+                    moveList[i - 1],
+                    moveList[i] || ""
+                ],
+                ((i - 1) / 2),
+                levelMove({
+                    afterMove: playedMove,
+                    moves: result
+                }),
+                color
+            );
+        }
         updateBoard(board);
     }
    return allResults;
@@ -106,7 +129,7 @@ function updateBoard(newBoard){
     drawBoard(newBoard);
 }
 
-function addMovesToList(moves, index, level){
+function addMovesToList(moves, index, level, color){
     const box = document.getElementById("moves");
     const moveDiv = document.createElement("div");
     moveDiv.className="move";
@@ -264,7 +287,7 @@ drawBoard()
 //analysieren
 const moves = await analyseMoveList(
     JSON.parse(sessionStorage.getItem("moveList")),
-    (JSON.parse(sessionStorage.getItem("gameDetails")).color  === 0
+    (JSON.parse(sessionStorage.getItem("gameDetails")).color  === 1
         ? "white"
         : "black"
     )

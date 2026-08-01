@@ -24,7 +24,7 @@ const pieceMap = {
     "b": "p"
 };
 
-function boardToFen(board) {
+function boardToFen(board, color) {
     let fen = "";
     for (let y = 0; y < 8; y++) {
         let empty = 0;
@@ -47,11 +47,11 @@ function boardToFen(board) {
             fen += "/";
         }
     }
-    return fen + " w - - 0 1";
+    return `${fen} ${color[0]} - - 0 1`;
 }
 
 // ===== Analyse =====
-function analyseMoves(pos) {
+function analyseMoves(pos, color) {
     return new Promise(resolve => {
         let results = [];
         engine.onmessage = event => {
@@ -74,7 +74,7 @@ function analyseMoves(pos) {
                 resolve(results.filter(Boolean));
             }
         };
-        const fen = boardToFen(pos);
+        const fen = boardToFen(pos, color);
         engine.postMessage(
             "position fen " + fen
         );
