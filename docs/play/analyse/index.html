@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
+</head>
+<body>
+
+<div id="game">
+
+    <div id="boardContainer">
+        <div id="boardWrapper">
+            <div id="board"></div>
+        </div>
+    </div>
+
+    <div id="sidebar">
+
+    <div id="panel">
+        <p>
+            Chess analysis powered in part by
+            <a href="https://github.com/nmrugg/stockfish.js">
+                Stockfish.js</a>, 
+            an open-source project based on Stockfish.
+        </p>
+        <div id="moves"></div>
+    </div>
+
+<script>
+    const pre = "../../";
+</script>
+<script src="../style.js"></script>
+<script src="./stockfish-user.js"></script>
+<script type="module" src="./analyser.js"></script>
+
+</body>
+</html> 
+ 

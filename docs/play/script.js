@@ -34,6 +34,7 @@ let winner = null;
 let lastMove = null;
 let promotionPending = false;
 const moveHistory = [];
+const moveList = [];
 
 // 🖼️ Render
 function drawBoard(){
@@ -101,6 +102,11 @@ function handleClick(x, y){
 
             boardMatrix[y][x] = boardMatrix[from.y][from.x];
             boardMatrix[from.y][from.x] = "";
+
+            moveList.push(
+                squareName(from.x, from.y) + squareName(x, y)
+             );
+            console.log(moveList);
 
         }
 
@@ -197,6 +203,10 @@ function startClock(){
 }
 
 function updateGameStatus(text){
+    sessionStorage.setItem(
+        "moveList", 
+        JSON.stringify(moveList)
+    );
     let status = document.getElementById("gameStatus");
     if(!status){
         status = document.createElement("div");
@@ -204,6 +214,15 @@ function updateGameStatus(text){
         document.getElementById("panel").prepend(status);
     }
     status.textContent = text;
+    if(!document.getElementById("analyseButton")){
+        const button = document.createElement("button");
+        button.id = "analyseButton";
+        button.textContent = "Analysieren";
+        button.onclick = () => {
+            window.location.href = "./analyse";
+        };
+        document.getElementById("panel").appendChild(button);
+    }
 }
 
 // 🚀 START

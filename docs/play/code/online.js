@@ -338,6 +338,10 @@ return false;
 function finishLocalMove(entry){
 moveHistory.push(entry);
 lastMove=entry;
+moveList.push(
+        squareName(entry.from.x, entry.from.y) +
+        squareName(entry.to.x, entry.to.y)
+    );
 // ONLINE SENDEN
 sendOnlineMove(entry);
 if(

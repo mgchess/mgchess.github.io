@@ -124,6 +124,11 @@ function finishLocalMove(entry){
     moveHistory.push(entry);
     lastMove = entry;
 
+    moveList.push(
+        squareName(entry.from.x, entry.from.y) +
+        squareName(entry.to.x, entry.to.y)
+    );
+    
     if(entry.captured && entry.captured.toLowerCase() === "k"){
         winner = pieceColor(entry.piece);
         updateGameStatus(`${winner === "white" ? "Weiss" : "Schwarz"} gewinnt`);
