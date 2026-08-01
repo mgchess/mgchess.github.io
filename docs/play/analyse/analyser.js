@@ -62,7 +62,10 @@ async function analyseMoveList(moveList, color = "white") {
                 opponentMove || ""
             ],
             (i / 2),
-
+            levelMove({
+                afterMove: playedMove,
+                moves: result
+            })
         );
         updateBoard(board);
     }
@@ -86,14 +89,17 @@ function updateBoard(newBoard){
 
 function addMovesToList(moves, index, level){
     const box = document.getElementById("moves");
-    const div = document.createElement("div");
-    div.className="move";
-    if(index % 2 === 0){
-        div.textContent = `${moves[0]}`;
-    } else {
-        div.textContent = `${moves[1]}`;
+    const moveDiv = document.createElement("div");
+    moveDiv.className="move";
+    let divs = [];
+    for ( let i=0 ; i<3 ; i++ ) {
+        divs[i] = document.createElement("div");
+        moveDiv.appendChild(divs[i]);
     }
-    box.appendChild(div);
+    divs[0].innerHTML = `${index + 1}. ${moves[0]}`;
+    divs[1].innerHTML = moves[1];
+    divs[2].innerHTML = `${level.html} <span>${level.txt}</span>`;
+    box.appendChild(moveDiv);
 }
 
 //rater
