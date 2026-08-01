@@ -88,11 +88,10 @@ function addMoveToList(move, index){
     const box = document.getElementById("moves");
     const div = document.createElement("div");
     div.className="move";
-    const number =  Math.floor(index / 2) + 1;
     if(index % 2 === 0){
-        div.textContent = `${number}. ${move}`;
+        div.textContent = `${move}`;
     } else {
-        div.textContent = `${number}... ${move}`;
+        div.textContent = `${move}`;
     }
     box.appendChild(div);
 }
