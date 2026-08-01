@@ -173,19 +173,19 @@ function levelMove(item) {
             level = 2;
             txt = "genius";
             html = "<div class='level level2'>!!</div>";
-        } else if ((index >= 3 && index <= 9) || toLevel === 3 ) {
+        } else if ((index >= 3 && index <= 4) || toLevel === 3 ) {
             level = 3;
             txt = "very smart";
             html = "<div class='level level3'>!</div>";
-        } else if ((index >= 10 && index <= 19) || toLevel === 4 ) {
+        } else if ((index >= 5 && index <= 10) || toLevel === 4 ) {
             level = 4;
             txt = "smart";
             html = "<div class='level level4'>+</div>";
-        } else if ((index >= 20 && index <= 34) || toLevel === 5 ) {
+        } else if ((index >= 11 && index <= 16) || toLevel === 5 ) {
             level = 5;
             txt = "neutral";
             html = "<div class='level level5'>ok</div>";
-        } else if ((index >= 35 && index <= 49) || toLevel === 6 ) {
+        } else if ((index >= 17 && index <= 25) || toLevel === 6 ) {
             level = 6;
             txt = "bad";
             html = "<div class='level level6'>-</div>";
