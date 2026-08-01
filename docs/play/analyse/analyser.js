@@ -56,7 +56,11 @@ async function analyseMoveList(moveList, color = "white") {
         // eigenen Zug ausführen
         board = applyMove(
             board,
-            playedMove
+            playedMove,
+            levelMove({
+                afterMove: playedMove,
+                moves: result
+            }).level
         );
         // gegnerischen Zug ausführen
         const opponentMove = moveList[i + 1];
@@ -82,11 +86,16 @@ async function analyseMoveList(moveList, color = "white") {
    return allResults;
 }
 
-function applyMove(board, move) {
+function applyMove(board, move, level) {
     const fromX = move.charCodeAt(0) - 97;
     const fromY = 8 - Number(move[1]);
     const toX = move.charCodeAt(2) - 97;
     const toY = 8 - Number(move[3]);
+    levelBoard[toY][toX] = levelBoard[fromY][fromX];
+    levelBoard[fromY][fromX] = [];
+    if (level) {
+        levelBoard[toY][toX].unshift(level);
+    }
     const newBoard = structuredClone(board);
     newBoard[toY][toX] = newBoard[fromY][fromX];
     newBoard[fromY][fromX] = "";

@@ -65,7 +65,6 @@
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
-
     position:relative;
     padding:10px;
     border-bottom:1px solid #2a2f3a;
@@ -102,7 +101,6 @@
     position:absolute;
     top:-5px;
     right:-5px;
-
     display:flex;
     flex-direction:column;
     gap:3px;
