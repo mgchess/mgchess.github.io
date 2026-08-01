@@ -48,10 +48,6 @@ async function analyseMoveList(moveList, color = "white") {
             board,
             playedMove
         );
-        addMoveToList(
-            playedMove,
-            i
-        );
         // gegnerischen Zug ausführen
         const opponentMove = moveList[i + 1];
         if (opponentMove) {
@@ -59,11 +55,15 @@ async function analyseMoveList(moveList, color = "white") {
                 board,
                 opponentMove
             );
-            addMoveToList(
-                opponentMove,
-                i + 1
-            );
         }
+        addMovesToList(
+            [
+                playedMove,
+                opponentMove || ""
+            ],
+            (i / 2),
+
+        );
         updateBoard(board);
     }
    return allResults;
@@ -84,22 +84,22 @@ function updateBoard(newBoard){
     drawBoard(newBoard);
 }
 
-function addMoveToList(move, index){
+function addMovesToList(moves, index, level){
     const box = document.getElementById("moves");
     const div = document.createElement("div");
     div.className="move";
     if(index % 2 === 0){
-        div.textContent = `${move}`;
+        div.textContent = `${moves[0]}`;
     } else {
-        div.textContent = `${move}`;
+        div.textContent = `${moves[1]}`;
     }
     box.appendChild(div);
 }
 
 //rater
-function levelMoves(analysis) {
-    const levels = [];
-    for (const item of analysis) {
+function levelMove(item) {
+    //const levels = [];
+    //for (const item of analysis) {
         const playedMove = item.afterMove;
         const bestMoves = item.moves;
         const index = bestMoves.findIndex(
@@ -107,36 +107,58 @@ function levelMoves(analysis) {
         );
         let level;
         let txt;
+        let html;
         if (index === 0) {
             level = 1;
             txt = "perfect";
+            html = "<div class='level level1'>100</div>";
         } else if (index >= 1 && index <= 2) {
             level = 2;
             txt = "genius";
+            html = "<div class='level level2'>!!</div>";
         } else if (index >= 3 && index <= 9) {
             level = 3;
             txt = "very smart";
+            html = "<div class='level level3'>!</div>";
         } else if (index >= 10 && index <= 19) {
             level = 4;
             txt = "smart";
+            html = "<div class='level level4'>+</div>";
         } else if (index >= 20 && index <= 34) {
             level = 5;
             txt = "neutral";
+            html = "<div class='level level5'>ok</div>";
         } else if (index >= 35 && index <= 49) {
             level = 6;
             txt = "bad";
+            html = "<div class='level level6'>-</div>";
         } else {
             level = 7;
             txt = "very bad";
+            html = "<div class='level level7'>??</div>";
         }
-        levels.push({
+        /*levels.push({
             level: level,
-            txt: txt
-        });
+            txt: txt,
+            html: html
+        });*/
+    //}
+    return {
+        level: level,
+        txt: txt,
+        html: html
+    };
+}
+
+function levelMoves(analysis) {
+    const levels = [];
+    for (const item of analysis) {
+        levels.push(
+            levelMove(item)
+        )
     }
     return levels;
 }
-
 //brett erstellen
 function initColors(){
     let matrix=[];
