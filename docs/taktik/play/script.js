@@ -50,11 +50,26 @@ function drawBoard(){
             }
 
             const piece = boardMatrix[y][x];
-            if (piece && isStandard) {
-                const img = document.createElement("img");
-                img.src = style.pieces[piece];
-                square.appendChild(img);
-            }
+if (piece && isStandard) {
+
+    const imgPath = style.pieces[piece];
+
+    if(imgPath){
+
+        const img = document.createElement("img");
+        img.src = imgPath;
+        square.appendChild(img);
+
+    } else {
+
+        console.warn(
+            "Keine Grafik für Figur:",
+            piece
+        );
+
+    }
+
+}
             // Zahlen links
             if (x === 0) {
                 const rank = document.createElement("span");
@@ -421,22 +436,53 @@ function loadFEN(fen){
         for(let char of rows[y]){
 
             if(!isNaN(char)){
+
                 for(let i = 0; i < Number(char); i++){
                     boardMatrix[y].push("");
                 }
-            }
-            else{
-                boardMatrix[y].push(char);
-            }
+
+            } else{
+
+    const fenMap = {
+        "P":"B",
+        "p":"b",
+
+        "R":"T",
+        "r":"t",
+
+        "N":"S",
+        "n":"s",
+
+        "B":"L",
+        "b":"l",
+
+        "Q":"D",
+        "q":"d",
+
+        "K":"K",
+        "k":"k"
+    };
+
+
+    boardMatrix[y].push(
+        fenMap[char]
+    );
+
+}
         }
     }
 
-    activePlayer = position[1] === "w" ? "white" : "black";
+    activePlayer =
+        position[1] === "w"
+        ? "white"
+        : "black";
+
 
     moveList.length = 0;
     selected = null;
 
     drawBoard();
+
 }
 
 drawBoard();
