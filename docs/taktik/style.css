@@ -1,0 +1,41 @@
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0f1115;
+    color:white;
+}
+
+h2{
+    text-align: center;
+}
+
+.container{
+    width:min(1200px,95%);
+    margin:30px auto;
+}
+
+.content{
+    display:grid;
+    gap:16px;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card{
+    background:#171a21;
+    border:1px solid #2a2f3a;
+    border-radius:12px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+}
+
+.card h2{
+    margin:0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGChess</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
+</head>
+<body>
+
+    <div id="topbar"></div>
+
+    <h2>Taktik-Aufgaben</h2>
+
+    <div class="container">
+        <div class="content">
+
+            <a  href="./play/?mode=bestmove">
+                <div class="card">
+                    <h2>best Move</h2>
+                    <p>finde den betsen Zug</p>
+                </div>
+            </a>
+            
+        </div>
+    </div>
+
+<script type="module">
+    import { loadBar } from "../api/bar.js";
+    document.getElementById("topbar").innerHTML = await loadBar("..");
+</script>
+</body>
+</html>
