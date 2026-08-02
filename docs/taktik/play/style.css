@@ -1,0 +1,48 @@
+/* text */
+p {
+    color: gray;
+}
+
+a {
+    color: gray;
+}
+
+/* button-analyse */
+#analyseTButton{
+    background: #f9e82d;
+}
+
+#analyseTButton:hover{
+    background: #cbbd24;
+    transform: translateY(-2px);
+}
+
+#analyseTButton:active{
+    transform: translateY(0);
+}
+
+/* button-verlassen */
+#skipButton{
+    background: #00f7ff;
+    border: 3px solid #00a1a1;
+}
+
+/* buttons */
+#buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center; 
+    align-items: center;
+} #buttons button {
+    display: block;
+    margin: 16px auto 0;
+    padding: 12px 24px;
+    color: black;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+} #buttons a {
+    text-decoration: none;
+}

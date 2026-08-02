@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <link rel="stylesheet" href="../../play/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
+</head>
+<body>
+
+<div id="game">
+
+    <div id="boardContainer">
+        <div id="boardWrapper">
+            <div id="board"></div>
+        </div>
+    </div>
+
+    <div id="sidebar">
+
+    <div id="panel">
+        <p>
+            Schach Taktik-Aufgaben using database from
+            <a href="https://github.com/lichess/">
+                lichess.org</a>.
+        </p>
+
+        <!--
+        <div id="moves"></div>
+        -->
+
+        <div id="buttons">
+            <button id="skipButton">
+                Skip
+            </button>
+        </div>
+    </div>
+
+<script>
+    const pre = "../../";
+</script>
+<script src="../../play/style.js"></script>
+<script type="module" src="./script.js"></script>
+<script type="module" src="./bestmove.js"></script>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const paramMode = params.get("mode");
+    switch(paramMode){
+        case "bestmove" :
+            runBestmove();
+            break;
+        default:
+            const messageDiv = document.getElementById("skipButton");
+            messageDiv.innerHTML = "wähle eiene Modus aus"
+            messageDiv.style.backgroundColor = "red";
+            messageDiv.style.border = "3px solid darkred";
+            const messageA = document.createElement("a");
+            messageA.href = "../";
+            document.getElementById("buttons").appendChild(messageA);
+            messageA.appendChild(messageDiv);
+    }
+</script>
+
+</body>
+</html> 
+ 
