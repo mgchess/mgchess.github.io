@@ -81,6 +81,33 @@
     gap:8px;
 }
 
+.levelW {
+    background: #fdd835;
+    border-color: #f9a825;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} .levelW svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    display: block;
+    flex-shrink: 0;
+}
+
+.levelL {
+    background: #e53935;
+    border-color: #b71c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} .levelL svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    display: block;
+}
+
 /* levels-board */
 .pieceContainer{
     position:relative;
