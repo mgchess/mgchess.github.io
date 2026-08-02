@@ -1,3 +1,23 @@
+const HTMLcodes = {
+    "levelW": `
+        <div class="level levelW">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 19h-14c-.5 0-.9-.3-1-.8l-2-10c0-.4.1-.8.5-1.1c.4-.2.8-.2 1.1 0l4.1 3.3l3.4-5.1c.4-.6 1.3-.6 1.7 0l3.4 5.1l4.1-3.3c.3-.3.8-.3 1.1 0c.4.2.5.6.5 1.1l-2 10c0 .5-.5.8-1 .8z"/>
+            </svg>
+        </div>
+    `, "levelL": `
+        <div class="level levelL">
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                fill="none" stroke="white"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            >
+                <path d="M20 4v5l-9 7l-4 4l-3 -3l4 -4l7 -9l5 0" />
+                <path d="M6.5 11.5l6 6" />
+            </svg>
+        </div>
+    `
+};
 const boardMatrix = [
     ["t","s","l","d","k","l","s","t"],
     ["b","b","b","b","b","b","b","b"],
@@ -70,13 +90,11 @@ async function analyseMoveList(moveListi, color) {
             playedMove
         );
         // eigenen Zug ausführen
+        const playedMoveLevel = getLevel(moveList, i, playedMove, result);
         board = applyMove(
             board,
             playedMove,
-            levelMove({
-                afterMove: playedMove,
-                moves: result
-            }).level
+            playedMoveLevel
         );
         let result2;
         if (bothSides) { if (playedMove2) {
@@ -94,13 +112,12 @@ async function analyseMoveList(moveListi, color) {
                 "Analysiert:",
                 playedMove2
             );
+            const playedMoveLevel2 = getLevel(moveList, (i+1), playedMove2, result2);
+            console.log(playedMoveLevel2);
             board = applyMove(
                 board,
                 playedMove2,
-                levelMove({
-                    afterMove: playedMove2,
-                    moves: result2
-                }).level
+                playedMoveLevel2
             );
             addMovesToList(
                     [
@@ -109,17 +126,24 @@ async function analyseMoveList(moveListi, color) {
                     ],
                     (i / 2),
                     [
-                        levelMove({
-                            afterMove: playedMove,
-                            moves: result
-                        }),
-                        levelMove({
-                            afterMove: playedMove2,
-                            moves: result2
-                        })
+                        levelMove(playedMoveLevel),
+                        levelMove(playedMoveLevel2)
                     ],
                     "both"
                 );
+        } else {
+            addMovesToList(
+                [
+                    playedMove,
+                    " "
+                ],
+                (i / 2),
+                [
+                    levelMove(playedMoveLevel),
+                    levelMove(" ")
+                ],
+                "both"
+            );
         }} else {
             // gegnerischen Zug ausführen
             const opponentMove = moveList[i + 1];
@@ -136,10 +160,7 @@ async function analyseMoveList(moveListi, color) {
                         opponentMove || ""
                     ],
                     (i / 2),
-                    levelMove({
-                        afterMove: playedMove,
-                        moves: result
-                    }),
+                    levelMove(playedMoveLevel),
                     color
                 );
             } else {
@@ -149,10 +170,7 @@ async function analyseMoveList(moveListi, color) {
                         moveList[i] || ""
                     ],
                     ((i - 1) / 2),
-                    levelMove({
-                        afterMove: playedMove,
-                        moves: result
-                    }),
+                    levelMove(playedMoveLevel),
                     color
                 );
             }
@@ -160,6 +178,19 @@ async function analyseMoveList(moveListi, color) {
         updateBoard(board);
     }
    return allResults;
+}
+
+function getLevel(list, i, playedMove, result) {
+    if (!list[i+1]) {
+        return "w";
+    } else if (!list[i+2]) {
+        return "l";
+    } else {
+        return levelMove({
+                afterMove: playedMove,
+                moves: result
+            }).level;
+    }
 }
 
 function applyMove(board, move, level) {
@@ -258,10 +289,22 @@ function levelMove(item) {
             level = 6;
             txt = "bad";
             html = "<div class='level level6'>-</div>";
-        } else {
+        } else if ( toLevel === 99 || toLevel === 7 ) {
             level = 7;
             txt = "very bad";
             html = "<div class='level level7'>??</div>";
+        } else if ( toLevel === "w" ) {
+            level = "w";
+            txt = "win";
+            html = HTMLcodes.levelW;
+        } else if ( toLevel === "l" ) {
+            level = "l";
+            txt = "lose";
+            html = HTMLcodes.levelL;
+        } else if ( toLevel === " " ) {
+            level = " ";
+            txt = " ";
+            html = " ";
         }
         /*levels.push({
             level: level,
